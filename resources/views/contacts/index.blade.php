@@ -42,9 +42,23 @@
                 <td class="px-6 py-4">
                     {{$contact->user->email}}
                 </td>
-                
                 <td class="px-6 py-4">
-                    <a href="{{ route ('contacts.edit', $contact)}}" class="btn btn-blue">Editar</a>
+                    <div class="flex justify-end space-x-2">
+
+                        <form action="{{ route ('contacts.destroy', $contact)}}" method="POST">
+
+                            @csrf
+
+                            @method ('DELETE')
+
+                            <button type="submit" class= "btn btn-red">Eliminar</button>
+
+                        </form>
+
+                        <a href="{{ route ('contacts.edit', $contact)}}" class="btn btn-blue">Editar</a>
+                    </div>
+                
+                    
                 </td>
             </tr>
 

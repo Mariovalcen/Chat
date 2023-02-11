@@ -67,16 +67,7 @@ class ContactController extends Controller
         return redirect()->route('contacts.edit', $contact);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contact $contact)
-    {
-        return view('contacts.show' , compact('contact'));
-    }
+ 
 
     /**
      * Show the form for editing the specified resource.
@@ -131,6 +122,13 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        
+        $contact->delete();
+
+        session()->flash ('flash.banner', 'El contacto se eliminó correctamente');
+        session()->flash ('flash.bannerStyle', 'success');
+
+        return redirect()->route('contacts.index');
+        
     }
 }
