@@ -98,7 +98,29 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => [
+                'required',
+                'email',
+                'exists:users',
+                Rule::notIn([auth()->user()->email]),
+                new InvalidEmail($contact->user->email)
+            ]
+        ]);
+
+        $user = User::where('email',$request->email)->first();
+
+        $contact->update([
+            'name' => $request->name,
+            'contact_id' => $user->id,
+
+        ]);
+
+        session()->flash ('flash.banner', 'El contacto se actualizó correctamente');
+        session()->flash ('flash.bannerStyle', 'success');
+
+        return redirect()->route('contacts.edit', $contact);
     }
 
     /**
