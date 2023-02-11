@@ -8,6 +8,8 @@ use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Validation\Rule; 
 
+use App\Rules\InvalidEmail;
+
 class ContactController extends Controller
 {
     /**
@@ -46,6 +48,7 @@ class ContactController extends Controller
                 'email',
                 'exists:users',
                 Rule::notIn([auth()->user()->email]),
+                new InvalidEmail
             ]
         ]);
 
