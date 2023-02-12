@@ -15,6 +15,10 @@
                     <x-jet-nav-link href="{{ route('contacts.index') }}" :active="request()->routeIs('contacts.*')">
                         Contactos
                     </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                        Chat
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -139,6 +143,10 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('contacts.index') }}" :active="request()->routeIs('contacts.*')">
                 Contacts
+            </x-jet-responsive-nav-link>
+
+            <x-jet-responsive-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                Chat
             </x-jet-responsive-nav-link>
         </div>
 
