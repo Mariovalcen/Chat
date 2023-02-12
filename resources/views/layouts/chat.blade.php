@@ -15,6 +15,9 @@
 
         <!-- Styles -->
         {{-- <link rel="stylesheet" href="{{ mix('css/app.css') . '?version=' . Str::random()}}"> --}}
+
+        <link rel="stylesheet" href="{{asset('vendor/fontawesome-free/css/all.min.css')}}">
+
         @stack('css')
 
         @livewireStyles
