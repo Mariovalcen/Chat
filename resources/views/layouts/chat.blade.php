@@ -14,32 +14,28 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
+        {{-- <link rel="stylesheet" href="{{ mix('css/app.css') . '?version=' . Str::random()}}"> --}}
+        @stack('css')
+
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-jet-banner />
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+        <div class="h-32 bg-teal-600">
+        </div>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <h1>Prueba</h1>
-            <!-- Page Content -->
-            <main>
+        <div class="absolute left-0 top-6 w-screen">
+            <div class="container mx-auto">
                 {{ $slot }}
-            </main>
+            </div>
         </div>
 
         @stack('modals')
 
         @livewireScripts
+
+        @stack('js')
+
+
     </body>
 </html>
