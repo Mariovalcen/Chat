@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image_url')->nullable();
 
 
-            $table->boolean('is_group')->defaukt(false);
+            $table->boolean('is_group')->default(false);
 
 
             

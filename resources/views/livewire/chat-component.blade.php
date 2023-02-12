@@ -59,12 +59,24 @@
             <div class="bg-gray-100 h-16 flex items-center px-3">
 
                 <figure>
-                    <img class="w-10 h-10 rounded-full object-cover object-center" src="{{$contactChat->user->profile_photo_url}}" alt="{{ $contactChat->name}}">
+
+                    @if($chat)
+                        <img class="w-10 h-10 rounded-full object-cover object-center" src="{{$chat->image}}" alt="{{ $chat->name}}">
+                    @else
+                        <img class="w-10 h-10 rounded-full object-cover object-center" src="{{$contactChat->user->profile_photo_url}}" alt="{{ $contactChat->name}}">
+                    @endif
+
                 </figure>
 
                 <div class="ml-4">
                     <p class="text-gray-800">
-                        {{ $contactChat->name}}
+
+                        @if ($chat)
+                            {{ $chat->name}}
+                        @else
+                            {{ $contactChat->name}}
+                        @endif
+
                     </p>
                     <p class="text-green-500 text-xs">
                         Online
@@ -77,8 +89,8 @@
                 {{-- Contenido del chat --}}
             </div>
 
-            <form class="bg-gray-100 h-16 flex items-center px-4">
-                <x-jet-input type="text" class="flex-1" placeholder="Escriba su mensaje"/>
+            <form class="bg-gray-100 h-16 flex items-center px-4" wire:submit.prevent="sendMessage()">
+                <x-jet-input wire:model="bodyMessage" type="text" class="flex-1" placeholder="Escriba su mensaje"/>
 
                 <button class="flex-shrink-0 ml-4">
                     Enviar
