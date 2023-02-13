@@ -50,6 +50,10 @@ class Chat extends Model
         );
     }
 
+    // Mutador
+
+
+
     public function lastMessageAt(): Attribute
     {
         return new Attribute(

@@ -64,14 +64,22 @@
                                 <img src="{{$chatItem->image}}" class="h-12 w-12 object-cover object-center rounded-full" alt="{{ $chatItem->name}}">
                             </figure>
 
-                            <div class="ml-4 flex-1 py-4 border-b border-gray-200">
-                                <p>
+                            <div class="w-[calc(100%-4rem)] py-4 border-b border-gray-200">
+
+                                <div class="flex justify-between items-center">
+                                    <p>
                                     {{ $chatItem->name }}
                                 </p>
 
                                 <p class="text-xs">
-                                    12:45 pm
+                                    {{$chatItem->last_message_at->format('d-m-y h:i A')}}
+                                </p>  
+                                </div>
+                            {{-- Esto va a mostrat el resumen ultimo chat en el div del usuario --}}
+                                <p class="text-sm text-gray-700 mt-1 truncate">
+                                    {{ $chatItem->messages->last()->body}}
                                 </p>
+                              
                             </div>
                         </div>
                         
