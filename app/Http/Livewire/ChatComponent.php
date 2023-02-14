@@ -7,6 +7,8 @@ use Livewire\Component;
 use App\Models\Contact;
 use App\Models\Message;
 
+use Illuminate\Support\Facades\Notification;
+
 class ChatComponent extends Component
 
 {
@@ -43,6 +45,11 @@ class ChatComponent extends Component
     public function getChatsProperty(){
         return auth()->user()->chats()->get()->sortByDesc('last_message_at');
     }
+
+    public function getUsersNotificationsProperty(){
+        return  $this->chat ? $this->chat->users->where('id', '!=', auth()->id()) : [];
+    }
+
 
     // Métodos
     public function open_chat_contact (Contact $contact){
@@ -85,6 +92,8 @@ class ChatComponent extends Component
             'user_id' => auth()->user()->id
 
         ]);
+
+        Notification::send($this->users_notifications, new \App\Notifications\NewMessage());
 
         $this->reset('bodyMessage', 'contactChat');
     }
