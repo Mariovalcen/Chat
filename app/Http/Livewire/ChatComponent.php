@@ -15,14 +15,13 @@ class ChatComponent extends Component
 
     public $search;
 
-    public $contactChat,$chat;
+    public $contactChat,$chat, $chat_id;
 
     public $bodyMessage;
 
 // Oyentes
 public function getListeners()
 {
-
     $user_id = auth()->user()->id;
 
     return [
@@ -63,6 +62,16 @@ public function getListeners()
         return  $this->chat ? $this->chat->users->where('id', '!=', auth()->id()) : [];
     }
 
+//Ciclo de vida
+public function updatedBodyMessage($value){
+
+    if($value){
+        Notification::send($this->users_notifications, new \App\Notifications\UserTyping($this->chat->id));
+    }
+
+}
+
+
 
     // Métodos
     public function open_chat_contact (Contact $contact){
@@ -76,6 +85,7 @@ public function getListeners()
 
     if($chat){
         $this->chat =$chat;
+        $this->chat_id = $chat->id;
         $this->reset('contactChat', 'bodyMessage','search');
 
     }else{
@@ -86,6 +96,7 @@ public function getListeners()
 
     public function open_chat(Chat $chat){
         $this->chat = $chat;
+        $this->chat_id = $chat->id;
         $this->reset('contactChat', 'bodyMessage');
 
     }
@@ -97,6 +108,7 @@ public function getListeners()
 
         if(!$this->chat){
             $this->chat= Chat::create();
+            $this->chat_id = $this->chat->id;
             $this->chat->users()->attach([auth()->user()->id, $this->contactChat->contact_id]);
         }
 
