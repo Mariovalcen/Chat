@@ -113,6 +113,10 @@ public function getListeners()
 
     public function render()
     {
+
+        if ($this->chat) {
+            $this->emit('scrollIntoView');
+        }
         return view('livewire.chat-component')->layout('layouts.chat');
     }
 }
