@@ -19,6 +19,14 @@ class ChatComponent extends Component
 
     public $bodyMessage;
 
+    public $users;
+
+    // Se ejecuta cuando se inicializa el componente. Sirve para especificar que la propiedad user se trata de una colección
+
+    public function mount(){
+        $this->users = collect();
+    }
+
 // Oyentes
 public function getListeners()
 {
@@ -66,6 +74,10 @@ public function getListeners()
 
     public function getUsersNotificationsProperty(){
         return  $this->chat ? $this->chat->users->where('id', '!=', auth()->id()) : [];
+    }
+
+    public function getActiveProperty(){
+        return $this->users->contains($this->users_notifications->first()->id);
     }
 
 //Ciclo de vida
@@ -129,16 +141,21 @@ public function updatedBodyMessage($value){
         $this->reset('bodyMessage', 'contactChat');
     }
 
-    public function chatHere($event){
+    public function chatHere($users){
         // dd($event);
+        $this->users = collect($users)->pluck('id');
     }
 
-    public function chatJoining($event){
+    public function chatJoining($user){
     //   dd($event);
+    $this->users->push($user['id']);
     }
 
-    public function chatLeaving($event) {
+    public function chatLeaving($user) {
         // dd($event);
+        $this->users = $this->users->filter(function($id) use ($user){
+            return $id != $user['id'];
+        }); 
     }
 
     public function render()
