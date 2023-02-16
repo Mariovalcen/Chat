@@ -26,6 +26,12 @@ public function getListeners()
 
     return [
         "echo-notification:App.Models.User.{$user_id},notification" => 'render',
+        // Para ver que ususario está en el chat
+        "echo-presence:chat.1,here" => 'chatHere',
+        // Para ver usuario(s) que se suman a la sala de chat
+        "echo-presence:chat.1,joining" => 'chatJoining',
+        // Para ver usuarios que salen de la sala
+        "echo-presence:chat.1,leaving" => 'chatLeaving',
         
     ];
 }
@@ -121,6 +127,18 @@ public function updatedBodyMessage($value){
         Notification::send($this->users_notifications, new \App\Notifications\NewMessage());
 
         $this->reset('bodyMessage', 'contactChat');
+    }
+
+    public function chatHere($event){
+        // dd($event);
+    }
+
+    public function chatJoining($event){
+    //   dd($event);
+    }
+
+    public function chatLeaving($event) {
+        // dd($event);
     }
 
     public function render()
