@@ -176,6 +176,10 @@ class ChatComponent extends Component
     {
 
         if ($this->chat) {
+            $this->chat->messages()->where('user_id', '!=', auth()->id())->where('is_read', false)->update([
+                'is_read' => true
+            ]);
+    
             $this->emit('scrollIntoView');
         }
         return view('livewire.chat-component')->layout('layouts.chat');
